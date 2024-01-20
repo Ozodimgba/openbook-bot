@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "dotenv": "^16.3.2",
+    "grammy": "^1.20.3",
     "node-telegram-bot-api": "^0.64.0"
   }
 }
