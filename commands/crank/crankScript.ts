@@ -12,7 +12,6 @@ async function start(
     ) {
 
   const {
-    ENDPOINT_URL,
     INTERVAL,
     MARKET_ID,
     CONSUME_EVENTS_LIMIT,
