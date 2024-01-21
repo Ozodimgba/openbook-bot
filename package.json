@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "crank": "npx ts-node"
   },
   "author": "Ozodimgba",
   "license": "ISC",
@@ -15,8 +16,13 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@openbook-dex/openbook-v2": "^0.1.7",
+    "@solana/web3.js": "^1.89.1",
     "dotenv": "^16.3.2",
     "grammy": "^1.20.3",
-    "node-telegram-bot-api": "^0.64.0"
+    "node-telegram-bot-api": "^0.64.0",
+    "telegraf": "^4.15.3",
+    "tslog": "^4.9.2"
   }
 }

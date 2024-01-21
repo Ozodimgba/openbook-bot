@@ -1,4 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
+import { Telegraf } from 'telegraf';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -6,12 +7,28 @@ dotenv.config();
 const token: any = process.env.TELEGRAM || "";
 const bot = new TelegramBot(token, { polling: true });
 
+// const samebot = new Telegraf(token);
+
+// const web_link = "https://celebrated-torte-184681.netlify.app/";
+
+// samebot.command("app",(ctx) =>
+//   ctx.reply("Welcome :)))))", {
+//     reply_markup: {
+//       keyboard: [[{ text: "web app", web_app: { url: web_link } }]],
+//     },
+//   })
+// );
+
+// samebot.launch();
+
 const commands = [
   { command: 'start', description: 'Start the bot' },
   { command: 'crank', description: 'Crank a particular market' },
   { command: 'wallet', description: 'Infomation on your openbook bot wallet' },
-  { command: 'createMarket', description: 'Create market on openbook' },
-  { command: 'placeOrder', description: 'Place order to buy or sell a token on openbook' },
+  { command: 'cranker', description: 'Information about all your cranking events and costs' },
+  // { command: 'cluster', description: 'Infomation on solana cluster(mainet/devnet)' },
+  // { command: 'createMarket', description: 'Create market on openbook' },
+  // { command: 'placeOrder', description: 'Place order to buy or sell a token on openbook' },
 ];
 
 // Set the commands
@@ -37,13 +54,18 @@ bot.onText(/\/crank (.+)/, (msg: any, match: any) => {
   bot.sendMessage(chatId, resp);
 });
 
-bot.onText(/\/wallet (.+)/, (msg: any, match: any) => {
+bot.onText(/\/wallet/, (msg: any, match: any) => {
   const chatId = msg.chat.id;
   console.log(match);
   const resp = match[1];
 
+  const web_link = "https://celebrated-torte-184681.netlify.app/";
   // Send back the matched "whatever" to the chat without the original message
-  bot.sendMessage(chatId, resp);
+  bot.sendMessage(chatId, 'Received your message', {
+    reply_markup: {
+      keyboard: [[{ text: "web app", web_app: { url: web_link } }]],
+    },
+  });
 });
 
 bot.on('message', (msg: any) => {
