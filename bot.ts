@@ -1,6 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import dotenv from 'dotenv';
-import * as command from './commands'
+import * as crank from './commands/crank'
 
 
 dotenv.config();
@@ -17,54 +17,17 @@ bot.on('callback_query', (callbackQuery: any) => {
   // Handle different button callbacks
   switch (data) {
     case 'crank':
-      // Handle the 'Crank' button click
-      bot.sendMessage(chatId, '*Cranker*\nThis tool allows market owners to prefund their wallet with SOL and automatically crank their markets at pre-set intervals\n\nThe crank tool provides monitoring cost analysis and notification for cranking events', {
-        parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: 'Crank new Market', callback_data: 'newCrank' },
-            ],
-            [
-              { text: 'View current crankers', callback_data: 'place_order' },
-            ],
-          ],
-        },
-        });
+      crank.handleCrank(bot, chatId);
       break;
-
-    case 'place_order':
-      // Handle the 'Place Order' button click
-      bot.sendMessage(chatId, 'Place Order button clicked!');
-      break;
-    
     case 'newCrank':
-      (async () => {
-        // Prompt the user for their name
-        const namePrompt = await bot.sendMessage(chatId, "Please input the marker ID of the market you wan to crank", {
-          reply_markup: {
-            force_reply: true,
-          },
-        });
-    
-        // Handle the reply
-        bot.onReplyToMessage(chatId, namePrompt.message_id, async (nameMsg) => {
-          const name = nameMsg.text;
-          // Save name in DB if you want to ...
-          //confirm market ID and send them market info for them to confirm
-          await bot.sendMessage(chatId, `Please confirm market ID: ${name}!`, {
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  { text: 'Confirm', callback_data: 'crank' },
-                ]
-              ]
-            }
-          });
-        });
-      })();
+      crank.handleNewCrank(bot, chatId);
       break;
-
+    case 'interval':
+      crank.handleInterval(bot, chatId);
+      break;
+    case 'custom-crank':
+      crank.handleCustomCrank(bot, chatId);
+      break;
     case 'create_market':
       // Handle the 'Create Market' button click
       bot.sendMessage(chatId, 'Create Market button clicked!');
@@ -157,7 +120,7 @@ bot.onText(/\/wallet (.+)/, (msg: any, match: any) => {
 //       await bot.sendMessage(msg.chat.id, `Hello ${name}!`);
 //   });
 // });
-bot.onText(/\/crank/, command.crank(bot))
+
 
 bot.onText(/\/cranker/, (msg: any, match: any) => {
   const chatId = msg.chat.id;
