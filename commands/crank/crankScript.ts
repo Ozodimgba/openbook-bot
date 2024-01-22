@@ -8,17 +8,9 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-async function start(
+async function crank(INTERVAL?, MARKET_ID?, CONSUME_EVENTS_LIMIT?, CLUSTER?
     ) {
 
-  const {
-    INTERVAL,
-    MARKET_ID,
-    CONSUME_EVENTS_LIMIT,
-    CLUSTER,
-  } = process.env;
-
-  
    const wallet = new Wallet(authority);
 
    const log = new Logger({name: "openbook-cranker-V2", minLevel: 1});
@@ -88,4 +80,4 @@ async function start(
 
 }
 
-start();
+crank();

@@ -35,7 +35,21 @@ bot.on('callback_query', (callbackQuery: any) => {
 
     case 'settings':
       // Handle the 'Settings' button click
-      bot.sendMessage(chatId, 'Settings button clicked!');
+      bot.sendMessage(chatId, '*Settings:*\n\n', {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: 'Change Cluster', callback_data: 'crank' },
+              { text: 'Consume event limit', callback_data: 'get_markets' },
+            ],
+            [
+              { text: 'Edit Cranker', callback_data: 'place_order' },
+              { text: 'Change wallet', callback_data: 'create_market' },
+            ],
+          ]
+        }
+      });
       break;
 
     case 'close_market':
@@ -121,6 +135,7 @@ bot.onText(/\/wallet (.+)/, (msg: any, match: any) => {
 //   });
 // });
 
+bot.onText(/\/crank/, (msg) => crank.handleCrank(bot, msg.chat.id));
 
 bot.onText(/\/cranker/, (msg: any, match: any) => {
   const chatId = msg.chat.id;

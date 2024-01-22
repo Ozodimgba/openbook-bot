@@ -1,3 +1,5 @@
+import searchMarkets from "../../helpers/searchMarket"
+
 
 export const handleCrank = (bot, chatId) => {
   bot.sendMessage(chatId, '*Cranker*\nThis tool allows market owners to prefund their wallet with SOL and automatically crank their markets at pre-set intervals\n\nThe crank tool provides monitoring cost analysis and notification for cranking events', {
@@ -16,15 +18,20 @@ export const handleCrank = (bot, chatId) => {
 };
 
 export const handleNewCrank = async (bot, chatId) => {
-  const namePrompt = await bot.sendMessage(chatId, "Please input the marker ID of the market you want to crank", {
+  const targetMarket = await bot.sendMessage(chatId, "Please input the marker ID of the market you want to crank", {
     reply_markup: {
       force_reply: true,
     },
   });
 
-  bot.onReplyToMessage(chatId, namePrompt.message_id, async (nameMsg) => {
-    const name = nameMsg.text;
-    await bot.sendMessage(chatId, `Please confirm market ID: ${name}!`, {
+  bot.onReplyToMessage(chatId, targetMarket.message_id, async (market) => {
+    const marketID = market.text;
+
+    const foundMarket = await searchMarkets(marketID);
+
+    if (foundMarket) {
+    // Market found, reply with market information
+    await bot.sendMessage(chatId, `Market found!\nMarket ID: ${foundMarket.market}\nPair: ${foundMarket.name}`, {
       reply_markup: {
         inline_keyboard: [
           [
@@ -33,6 +40,19 @@ export const handleNewCrank = async (bot, chatId) => {
         ]
       }
     });
+    } else {
+    // Market not found, reply with a message indicating that
+    await bot.sendMessage(chatId, `Market not found for ID: ${marketID}`, {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: 'Change market ID', callback_data: 'newCrank' },
+          ]
+        ]
+      }
+    });
+    }
+
   });
 };
 
