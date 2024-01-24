@@ -21,6 +21,7 @@
     "@solana/web3.js": "^1.89.1",
     "dotenv": "^16.3.2",
     "grammy": "^1.20.3",
+    "ioredis": "^5.3.2",
     "node-telegram-bot-api": "^0.64.0",
     "telegraf": "^4.15.3",
     "tslog": "^4.9.2"
