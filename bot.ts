@@ -89,7 +89,7 @@ bot.setMyCommands(commands)
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-
+  console.log(chatId)
   bot.sendMessage(chatId, '*Hello! Welcome to the Openbook bot.*\nA cutting edge bot built on top of Openbook V2.\n\n', {
   parse_mode: 'Markdown',
   reply_markup: {
