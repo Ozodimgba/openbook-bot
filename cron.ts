@@ -19,7 +19,7 @@ async function main() {
 
     // const list = await c.schedules.list()
     // console.log(list)
-    console.log("Schedulecreated successfully.");
+    console.log("Schedule created successfully.");
   } catch (error) {
     console.error("Error creating schedule:", error);
   }
