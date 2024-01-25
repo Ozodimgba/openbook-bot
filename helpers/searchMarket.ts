@@ -18,7 +18,7 @@ export default async function searchMarkets(targetMarketId: string) {
       // Iterate through the array and find the market with the matching market ID
       for (const market of markets) {
         if (market.market === targetMarketId) {
-          console.log(market)
+          // console.log(market)
           return market; // Return the matching market object
         }
       }

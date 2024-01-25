@@ -28,6 +28,9 @@ bot.on('callback_query', (callbackQuery: any) => {
     case 'custom-crank':
       crank.handleCustomCrank(bot, chatId);
       break;
+    case 'create-cranker':
+      crank.createCranker(bot, chatId);
+      break;
     case 'create_market':
       // Handle the 'Create Market' button click
       bot.sendMessage(chatId, 'Create Market button clicked!');
